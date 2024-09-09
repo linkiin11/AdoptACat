@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopt a Cat - Adopt</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Basic input styling */
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Adopt a Cat</h1>
+        <p>Find your new furry friend today</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="adopt.html">Adopt</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container">
+        <section id="adopt">
+            <h2>Cats Available for Adoption</h2>
+            <div class="cat-section">
+                <div class="cat-card">
+                    <img src="https://placekitten.com/250/250" alt="Whiskers">
+                    <h3>Whiskers</h3>
+                    <p>Age: 2 years</p>
+                    <p>Breed: Siamese</p>
+                    <button onclick="openModal('Whiskers')">Adopt Me!</button>
+                </div>
+                <div class="cat-card">
+                    <img src="https://placekitten.com/251/251" alt="Mittens">
+                    <h3>Mittens</h3>
+                    <p>Age: 1 year</p>
+                    <p>Breed: Maine Coon</p>
+                    <button onclick="openModal('Mittens')">Adopt Me!</button>
+                </div>
+                <div class="cat-card">
+                    <img src="https://placekitten.com/252/252" alt="Shadow">
+                    <h3>Shadow</h3>
+                    <p>Age: 3 years</p>
+                    <p>Breed: British Shorthair</p>
+                    <button onclick="openModal('Shadow')">Adopt Me!</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- The Modal -->
+    <div id="adoptModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Adopt <span id="catName"></span></h2>
+            <form id="adoptionForm">
+                <label for="userName">Your Name:</label>
+                <input type="text" id="userName" name="userName" required>
+
+                <label for="userEmail">Your Email:</label>
+                <input type="email" id="userEmail" name="userEmail" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Adopt a Cat | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        let selectedCat = '';
+
+        // Function to open the modal
+        function openModal(catName) {
+            selectedCat = catName;
+            document.getElementById('catName').textContent = catName;
+            document.getElementById('adoptModal').style.display = "block";
+        }
+
+        // Function to close the modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('adoptModal').style.display = "none";
+        }
+
+        // Close the modal when the user clicks anywhere outside of it
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('adoptModal')) {
+                document.getElementById('adoptModal').style.display = "none";
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('adoptionForm').onsubmit = function(event) {
+            event.preventDefault();  // Prevent page refresh
+            const userName = document.getElementById('userName').value;
+            const userEmail = document.getElementById('userEmail').value;
+
+            // Create the adoption data to send to the server
+            const adoptionData = {
+                name: userName,
+                email: userEmail,
+                cat: selectedCat
+            };
+
+            // Send a POST request to the server
+            fetch('/adopt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(adoptionData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(`Thank you, ${userName}! You have adopted ${selectedCat}. We will contact you soon.`);
+                    document.getElementById('adoptModal').style.display = "none";
+                } else {
+                    alert('There was an error processing your request. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error processing your request. Please try again.');
+            });
+        };
+    </script>
+</body>
+</html>
