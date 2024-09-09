@@ -23,7 +23,7 @@
         <section id="contact">
             <h2>Get in Touch</h2>
             <div class="alert" id="successMessage" style="display:none;">Thank you for your message! We will contact you soon.</div>
-            <form name="contact" method="POST" data-netlify="true" action="/success">
+            <form name="contact" method="POST" netlify="true" action="/success">
                 <input type="hidden" name="form-name" value="contact">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
@@ -38,7 +38,7 @@
     </footer>
 
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
+        document.getElementById('contact').addEventListener('submit', function(event) {
             event.preventDefault();
             
             // Capture form data
