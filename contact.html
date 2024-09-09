@@ -23,10 +23,10 @@
         <section id="contact">
             <h2>Get in Touch</h2>
             <div class="alert" id="successMessage" style="display:none;">Thank you for your message! We will contact you soon.</div>
-            <form name="contact" method="POST" action="/api/submit">
-                <input type="text" name="name" required>
-                <input type="email" name="email" required>
-                <textarea name="message" required></textarea>
+            <form name="contact" method="POST" action="/.netlify/functions/send-email">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
         </section>
