@@ -23,16 +23,11 @@
         <section id="contact">
             <h2>Get in Touch</h2>
             <div class="alert" id="successMessage" style="display:none;">Thank you for your message! We will contact you soon.</div>
-            <form id="contactForm">
-                <label for="name">Your Name:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">Your Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="message">Your Message:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
+            <form name="contact" method="POST" data-netlify="true" action="/success">
+                <input type="hidden" name="form-name" value="contact">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
         </section>
