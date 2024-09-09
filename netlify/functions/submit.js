@@ -7,14 +7,14 @@ exports.handler = async function(event, context) {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'your-email@gmail.com',
-      pass: 'your-password'
+      user: 'hatdooooog1@gmail.com',
+      pass: 'ioys owuw wrwc xkei'
     }
   });
 
   let mailOptions = {
-    from: 'your-email@gmail.com',
-    to: data.email,
+    from: 'hatdooooog1@gmail.com',
+    to: 'shinlink1105@gmail.com',
     subject: 'New Contact Form Submission',
     text: `Name: ${data.name}\nMessage: ${data.message}`
   };
